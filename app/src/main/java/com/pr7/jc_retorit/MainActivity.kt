@@ -22,6 +22,10 @@ import com.pr7.jc_retorit.data.repository.PostRepository
 import com.pr7.jc_retorit.ui.theme.JC_RetoritTheme
 import com.pr7.jc_retorit.ui.theme.screens.PostResponseUi
 import com.pr7.jc_retorit.ui.theme.screens.PostUiLazyColumn
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -40,15 +44,7 @@ class MainActivity : ComponentActivity() {
                     var arrayList by remember {
                             mutableStateOf(ArrayList<PostModel>())
                     }
-//                    var list= mutableListOf<PostModel>()
-//                    list.add(
-//                        PostModel(
-//                            userId = 6,
-//                            id = 5,
-//                            title = "oratio",
-//                            body = "numquam"
-//                        )
-//                    )
+
 
                     lifecycleScope.launch{
                         arrayList=postRepository.getAllData()
@@ -57,16 +53,31 @@ class MainActivity : ComponentActivity() {
                     PostUiLazyColumn(arrayList = arrayList)
                     //PostResponseUi(postModel = list.get(0))
                     prnewdesign(arrayList.size.toString())
+                    val mytext by remember {
+                        mutableStateOf("")
+                    }
 
                 }
             }
         }
+        val sc=CoroutineScope(Dispatchers.Main)
+        sc.launch {
+            delay(1000)
+            Log.d("PR77777", "onCreate: 7")
+        }
     }
+
+
 }
 
 @Composable
 fun prnewdesign(text:String) {
 
+    val mytext by remember {
+        mutableStateOf("")
+    }
+
     Text(text = text)
 }
+
 
